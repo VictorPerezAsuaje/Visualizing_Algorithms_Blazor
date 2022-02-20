@@ -1,0 +1,18 @@
+﻿@page "/binary-search"
+@using PoC_VisualizingAlgorithms.Entities
+
+<PageTitle>Binary search algorithm</PageTitle>
+
+<h1>Binary search algorithm</h1>
+<br />
+<p>
+   Binary Search is a Divide and Conquer search algorithm. It uses O(log n) time to find the location of an element in a search space where "n" is the size of the search space. However, it only works if we know beforehand that the elements in the search space are ordered in some way.
+</p>
+<p>The approach is as follows:</p>
+<ul>
+	<li>If the value of the element you want to find is less than the one in the middle of the search space, narrow the search space to the lower half. </li>
+	<li>From that lower half, take the middle element and check if it is less than the element, and if so, narrow the search space to the lower half once again.</li>
+	<li>Repeat this process until you find the number.</li>
+</ul>
+
+  

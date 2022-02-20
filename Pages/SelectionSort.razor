@@ -1,0 +1,112 @@
+﻿@page "/selection-sort"
+@using PoC_VisualizingAlgorithms.Entities
+
+<PageTitle>Selection sort algorithm</PageTitle>
+
+<h1>Selection sort algorithm</h1>
+<br />
+<p>
+    Also known as the "brute force" algorithm. It is easy to implement as it is usually the first idea you would come up with to sort an array of items. This is the approach for this algorithm:
+</p>
+
+<ul>
+    <li>Find the largest element in the array and exchange it with the element in the first position.</li>
+    <li>Find the second largest element in the array and exchange it with the element in the second position.</li>
+    <li>Continue this process until done.</li>
+</ul>
+
+<p>
+    In terms of time complexity, the selection sort algorithm has a geometric progression or O(n<sup>2</sup>), where "n" is the number of elements. 
+</p>
+
+@if(circles[0] == null)
+{
+    <div class="btn-toolbar mb-3 mt-3">
+        <div class="btn-group me-2">
+            <button class="btn btn-primary" @onclick="GenerateRandomValues">Generate values</button>
+            <div class="input-group">
+                <input type="number" class="form-control" placeholder="Number of items between 2 and 100" min="2" max="100" @bind="@numberOfItems" @oninput="@(e => numberOfItems = e.Value == null || e.Value == "" ? 5 : Convert.ToInt32(e.Value))">
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="btn-toolbar mb-3 mt-3">
+        <div class="btn-group me-2">
+            <button class="btn btn-primary @(algorithmConfig.State == AlgorithmState.Finished ? "" : "disabled")" @onclick="GenerateRandomValues">New values</button>
+            <div class="input-group">
+                <input type="number" class="form-control" placeholder="Number of items between 2 and 100" min="2" max="100" @bind="@numberOfItems" @oninput="@(e => numberOfItems = e.Value == null || e.Value == "" ? 5 : Convert.ToInt32(e.Value))" disabled="@(algorithmConfig.State == AlgorithmState.Finished ? false : true)" />
+            </div>
+        </div>
+        <div class="btn-group me-2">
+            <button class="btn btn-primary @(algorithmConfig.State == AlgorithmState.Ready ? "" : "disabled")" @onclick="ConventionalSelectionSort">Sort me</button>
+        </div>
+    </div>
+
+    <div class="visualization-container">
+    @foreach (Circle square in circles)
+    {
+        <div class="circle" style="background-color: hsl( @square.hue, 100%, 85%)">
+            <b>@square.Value</b>
+        </div>
+    }  
+    </div>
+    <br />
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+                  <div class="card-header">Iteration number</div>
+                  <div class="card-body">
+                    <h5 class="card-title">@algorithmConfig.stats.iterationNumber of @algorithmConfig.stats.totalIterations</h5>
+                  </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+                  <div class="card-header">Swaps made</div>
+                  <div class="card-body">
+                    <h5 class="card-title">@algorithmConfig.stats.swapsMade</h5>
+                  </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
+                  <div class="card-header">Ratio Swaps : Iteration</div>
+                  <div class="card-body">
+                    <h5 class="card-title">
+                        @algorithmConfig.stats.swapRatio %
+                    </h5>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="card border-primary mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Less-than occurrence</div>
+                    <div class="card-body text-primary">
+                    <h5 class="card-title">@algorithmConfig.stats.LessThan</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-success mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Equal-to occurrence</div>
+                    <div class="card-body text-success">
+                    <h5 class="card-title">@algorithmConfig.stats.EqualTo</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card border-warning mb-3" style="max-width: 18rem;">
+                    <div class="card-header">Greater-than occurrence</div>
+                    <div class="card-body text-warning">
+                    <h5 class="card-title">@algorithmConfig.stats.GreaterThan</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
