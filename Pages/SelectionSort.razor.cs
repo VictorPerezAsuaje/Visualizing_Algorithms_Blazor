@@ -53,7 +53,7 @@ namespace PoC_VisualizingAlgorithms.Pages
                     Order = i + 1,
                 };
 
-                circles[i].GenerateHue(numberOfItems);
+                circles[i].GenerateHueByValue();
             }
 
             algorithmConfig.State = AlgorithmState.Ready;
@@ -65,7 +65,7 @@ namespace PoC_VisualizingAlgorithms.Pages
         private void SwapStateValues(Circle swaper, Circle swaped)
         {
             swaper.Value = swaped.Value;
-            swaper.hue = swaped.hue;
+            swaper.Hue = swaped.Hue;
         }
 
         private async Task ConventionalSelectionSort()

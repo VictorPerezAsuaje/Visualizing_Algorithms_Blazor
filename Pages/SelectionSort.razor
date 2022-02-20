@@ -45,10 +45,10 @@ else
     </div>
 
     <div class="visualization-container">
-    @foreach (Circle square in circles)
+    @foreach (Circle circle in circles)
     {
-        <div class="circle" style="background-color: hsl( @square.hue, 100%, 85%)">
-            <b>@square.Value</b>
+        <div class="circle" style="background-color: hsl( @circle.Hue, 100%, 85%)">
+            <b>@circle.Value</b>
         </div>
     }  
     </div>

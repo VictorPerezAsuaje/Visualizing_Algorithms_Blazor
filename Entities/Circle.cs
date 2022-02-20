@@ -4,9 +4,13 @@
     {
         public int Value { get; set; }
         public int Order { get; set; } = 0;
-        public int hue { get; set; }
+        public int Hue { get; set; }
+        public string CssClass { get; set; } = "";
 
-        public void GenerateHue(int numberOfItems)
-            => this.hue = Convert.ToInt32(Value * 1.8);
+        public void GenerateHueByOrder(int numberOfItems)
+            => this.Hue = this.Order * 180 / numberOfItems;
+
+        public void GenerateHueByValue()
+            => this.Hue = Convert.ToInt32(this.Value * 1.8);
     }
 }

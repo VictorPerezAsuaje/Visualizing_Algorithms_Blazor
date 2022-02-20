@@ -8,6 +8,7 @@
 <p>
    Binary Search is a Divide and Conquer search algorithm. It uses O(log n) time to find the location of an element in a search space where "n" is the size of the search space. However, it only works if we know beforehand that the elements in the search space are ordered in some way.
 </p>
+
 <p>The approach is as follows:</p>
 <ul>
 	<li>If the value of the element you want to find is less than the one in the middle of the search space, narrow the search space to the lower half. </li>
@@ -15,4 +16,92 @@
 	<li>Repeat this process until you find the number.</li>
 </ul>
 
-  
+<p>To test how it works, let's play a guessing game. Think of a natural number between 1 and 100, both included. Once ready, click "start" and the computer will "guess" your number. Each time it makes a guess, you will need to indicate if the number you are thinking is higher or lower than the one that the machine guessed. </p>
+
+<p>In 7 questions or less the machine will guess it, guaranteed 😉.</p>
+
+@if(circles[0] == null)
+{
+	<div class="btn-toolbar mb-3 mt-3">
+        <div class="btn-group me-2">
+            <button class="btn btn-primary" @onclick="GenerateCircles">START</button>
+        </div>
+    </div>
+}
+else
+{
+    @if (!isSuccess)
+    {
+        <div class="container text-center">
+            <div class="row row-cols-1 row-cols-md-1 g-4">
+                <div class="col">
+                    <div class="card text-dark bg-light mb-3">
+                      <div class="card-body">
+                        <h5 class="card-title">Is @currentGuess the answer?</h5>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                    <div class="card text-dark mb-3" style="background-color: hsl( 5, 100%, 85%);" @onclick="() => CheckAnswer(Answer.Lower)">
+                      <div class="card-body">
+                        <h5 class="card-title">IT'S LOWER</h5>
+                      </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-dark mb-3" style="background-color: hsl( 117, 100%, 85%);" @onclick="() => CheckAnswer(Answer.Correct)">
+                      <div class="card-body">
+                        <h5 class="card-title">YES!</h5>
+                      </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-dark mb-3" style="background-color: hsl( 5, 100%, 85%);" @onclick="() => CheckAnswer(Answer.Higher)">
+                      <div class="card-body">
+                        <h5 class="card-title">IT'S HIGHER</h5>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	    <div class="container text-center">
+            <div class="row row-cols-1 row-cols-md-2 g-4">
+                <div class="col">
+                    <div class="card text-dark bg-light mb-3">
+                      <div class="card-header">Guess count</div>
+                      <div class="card-body">
+                        <h5 class="card-title">@algorithmConfig.stats.guessCount of 7</h5>
+                      </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-dark bg-light mb-3">
+                      <div class="card-header">Probability of success</div>
+                      <div class="card-body">
+                        <h5 class="card-title">@algorithmConfig.stats.guessProbability %</h5>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h3>Current possibilities</h3>
+	    <div class="visualization-container">
+	    @foreach(Circle circle in circles)
+	    {
+		    <div class="circle @circle.CssClass" style="background-color: hsl(@circle.Hue, 100%, 85%)">
+                <b>@circle.Value</b>
+            </div>
+	    }
+        </div>
+    }
+    else
+    {
+        <div>
+            SUCCESS IN @algorithmConfig.stats.guessCount GUESSES! Your number is: @currentGuess 😁
+        </div>
+    }
+}
